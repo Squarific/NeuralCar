@@ -34,7 +34,7 @@
 			A green background means the score has been verified, gray means the score might not be correct.
 			<div id="list">
 			</div>
-			<div class="close" onclick="document.getElementById('listContainer').style.dislay = 'none';">
+			<div onclick="document.getElementById('listContainer').style.dislay = 'none';">
 				Close
 			</div>
 		</div>

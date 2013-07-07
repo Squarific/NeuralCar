@@ -109,13 +109,7 @@ input {
 	background:rgb(62, 122, 29);
 }
 .close {
-	border:1px solid black;
-	width:100%;
-	margin:5px;
-	padding:5px;
-	cursor:pointer;
-	color:rgb(58, 42, 19);
-	border-radius:2px;
+	
 }
 #console {
 	overflow:auto;
