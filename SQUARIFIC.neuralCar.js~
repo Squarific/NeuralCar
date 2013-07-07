@@ -679,7 +679,7 @@ SQUARIFIC.neuralCar = {};
 			top.respawn();
 			top.changeColor("blue");
 			this.top = top;
-			document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. Score: " + top.input.lastScore / this.timePerGen * 100000 + " <br/>";
+			document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. Score: " + top.input.score / this.timePerGen * 100000 + " <br/>";
 		};
 		setTimeout(function (timePerGen) {document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. <br/>"; this.id = setInterval(this.reproduce.bind(this), timePerGen);}.bind(this, timePerGen), 0);
 	};
