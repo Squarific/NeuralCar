@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Neural Car</title>
+		<script src="SQUARIFIC.neuralCar.js"></script>
+		<script src="share.js"></script>
+		<link rel="stylesheet" href="screen.css">
+	</head>
+	<body>
+		<div id="topMenu" class="topMenu">
+			<div class="topMenu_button" onclick="showTopList(true)">Show shared list</div>
+			<div class="topMenu_button" onclick="showTopList(false)">Show shared list (view-only)</div>
+			<div class="topMenu_button" onclick="share(SQUARIFIC.neuralCarInstance.trainer.top.input.net, SQUARIFIC.neuralCarInstance.trainer.top.input.lastScore / SQUARIFIC.neuralCarInstance.trainer.timePerGen * 100000);">Share top car</div>
+			<div class="topMenu_button" onclick="SQUARIFIC.neuralCarInstance.trainer.stopAndChangeAllToTop();">Change all to top car and stop mutations</div>
+			<div class="topMenu_button" onclick="SQUARIFIC.neuralCarInstance.trainer.addToRunTime(1);">Simulate 1 second longer</div>
+			<div class="topMenu_button" onclick="SQUARIFIC.neuralCarInstance.trainer.addToRunTime(-1);">1 seconds less long</div>
+		</div>
+		<div id="screen" class="screen">
+			<div class="options">
+				<div class="label">Cars</div><input id="options_cars" class="option" value="10" placeholder="Amount of cars" type="number" />
+				<div class="label">Runtime per generation</div><input id="options_timePerGen" class="option" value="10" placeholder="Runtime per generation" type="number" />
+				<div class="label">Hidden layers</div><input id="options_hidden_layers" class="option" value="1" placeholder="Amount of hidden layers" type="number" />
+				<div class="label">Hidden nodes per layer</div><input id="options_hidden_nodes_per_layer" class="option" value="13" placeholder="Amount of hidden nodes per layer" type="number" />
+				<input type="submit" class="submit" value="Start simulation" onclick="pre_start();">
+				The more cars, layers and nodes you add, the more it'll become computional expensive.<br/>
+				1 layer and 13 nodes should suffice, taking more then 40 isn't adviced as improvement will be very little.<br/>
+				Extra nodes make it exponentialy more expensive.
+			</div>
+		</div>
+		<div id="console">
+			Console:<br/>
+		</div>
+		<div id="listContainer" class="listContainer">
+			You can add one of the cars other people shared by clicking on the score.<br/>
+			A green background means the score has been verified, gray means the score might not be correct.
+			<div id="list">
+			</div>
+		</div>
+	</body>
+</html>

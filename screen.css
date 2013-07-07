@@ -1,0 +1,120 @@
+body {
+	margin:0;
+	padding:0;
+	background:rgb(223, 220, 220);
+	-webkit-touch-callout: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: -moz-none;
+	user-select: none;
+}
+.topMenu {
+	display:none;
+	background:gray;
+	border-bottom:1px solid black;
+	padding:2px;
+	color:white;
+	font-size:16px;
+	font-weight:800;
+}
+.topMenu_button {
+	display:inline-block;
+	margin:3px;
+	padding:5px;
+	background:rgb(82, 86, 100);
+	cursor:pointer;
+}
+.topMenu_button:hover {
+	background:rgb(117, 121, 138);
+}
+.screen {
+	position:absolute;
+	left:0;
+	top:0;
+	width: 100%;
+	height: 100%;
+}
+.options {
+	background:rgb(87, 136, 128);
+	width:65%;
+	margin:5%;
+	padding:1%;
+	border: 1px solid rgb(68, 68, 68);
+	border-radius:2px;
+}
+.label {
+	display:inline;
+	width:200px;
+	color:rgb(28, 44, 39);
+	font-size:24px;
+	font-weight:800;
+}
+input {
+	width:98%;
+	margin:1%;
+	padding:5px;
+	font-size:22px;
+	font-weight:800;
+	color:rgb(43, 68, 60);
+	background:white;
+	border: 2px inset rgb(138, 138, 138);
+}
+.submit {
+	border: 2px outset rgb(138, 138, 138);
+}
+.error {
+	color:rgb(179, 0, 0);
+}
+.success {
+	color:rgb(27, 85, 27);
+}
+.listContainer {
+	display:none;
+	overflow:auto;
+	padding:2%;
+	position:fixed;
+	left:10%;
+	right:10%;
+	top:10%;
+	bottom:10%;
+	background:rgba(214, 212, 228, 0.95);
+	border-radius:3px;
+	border:1px solid black;
+	font-size:16px;
+	font-weight:800;
+	color:rgb(69, 79, 93);
+}
+.car-score {
+	border:1px solid black;
+	width:100%;
+	margin:5px;
+	padding:5px;
+	cursor:pointer;
+	color:rgb(58, 42, 19);
+	border-radius:2px;
+}
+.car-score:hover {
+	color:white;
+}
+.verified_0 {
+	background:rgb(163, 151, 136);
+}
+.verified_0:hover {
+	background:rgb(85, 92, 81);
+}
+.verified_1 {
+	background:rgb(88, 172, 41);
+}
+.verified_1:hover {
+	background:rgb(62, 122, 29);
+}
+#console {
+	overflow:auto;
+	padding:1%;
+	position:fixed;
+	right:20px;
+	top:60px;
+	height:70%;
+	width:23%;
+	background:rgba(0, 0, 0, 0.29);
+}
