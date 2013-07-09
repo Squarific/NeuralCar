@@ -3,7 +3,7 @@
 	$mysql_host = "localhost";
 	$mysql_database = "urban_car";
 	$mysql_user = "urban_car";
-	$mysql_password = "Kp0va74M";
+	$mysql_password = "******";
 	$database = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
 	$errors = array();
 	if (mysqli_connect_errno()) {

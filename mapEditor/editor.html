@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>Neural Car</title>
+		<script src="SQUARIFIC.mapEditor.js"></script>
+		<link rel="stylesheet" href="editor.css">
+	</head>
+	<body onload="SQUARIFIC.mapEditorInstance.inputHandler = new SQUARIFIC.mapEditor.InputHandler(document.getElementById('editor').getContext('2d'), {}, new SQUARIFIC.mapEditor.BackgroundMap({} ,{}, captions), captions);">
+		<div class="left">
+			<canvas id="editor" class="editor">
+				Your browser doesn't support this editor.
+			</canvas>
+		</div>
+		<div class="right">
+			<div id="error" class="error">
+			</div>
+			The brush and background are the maximum speed factors of the tile.
+			<textarea id="mapData">Paste your mapData here!</textarea><br/>
+			<input type="submit" value="Proccess" onclick="proccess()"><br/>
+			<div class="label">Width</div><input type="number" id="fill-width" value="1000"><br/>
+			<div class="label">Height</div><input type="number" id="fill-height" value="500"><br/>
+			<div class="label">Background</div><input type="number" id="fill-background" value="0"><br/>
+			<input type="submit" value="Fill the canvas" onclick="fill()"><br/>
+			<div id="captions" class="captions">
+				0: {min: 0, max: 0.5, color: green}<br/>
+				1: {min: 0.5, max: 1, color: gray}<br/>
+			</div>
+			<div class="label">Number</div><input id="caption_id" type="number" value="0"><br/>
+			<div class="label">Min</div><input id="caption_min" type="number" value="0"><br/>
+			<div class="label">Max</div><input id="caption_max" type="number" value="1"><br/>
+			<div class="label">Color</div><input id="caption_color" type="text" value="green"><br/>
+			<input type="submit" value="Add/Change caption" onclick="caption()"><br/>
+			<input type="submit" style="width:48%;" value="Round brush" onclick="SQUARIFIC.mapEditorInstance.inputHandler.changeBrushShape('round')"><input type="submit" style="width:48%;" value="Square brush" onclick="SQUARIFIC.mapEditorInstance.inputHandler.changeBrushShape('square')"><br/>
+			<div class="label">BrushSize</div><input id="brushSize" type="number" value="5"><br/>
+			<input type="submit" value="Change BrushSize" onclick="SQUARIFIC.mapEditorInstance.inputHandler.changeBrushSize(document.getElementById('brushSize').value)"><br/>
+			<div class="label">Brush</div><input id="brush" type="number" value="1"><br/>
+			<input type="submit" value="Change Brush" onclick="SQUARIFIC.mapEditorInstance.inputHandler.changeBrush(document.getElementById('brush').value)"><br/>
+			<input type="submit" value="Output" onclick="output()"><br/>
+		</div>
+		<div id="output" class="output">
+			<input type="submit" value="Close" onclick="document.getElementById('output').style.display = 'none';"><br/>
+			Captions:
+			<div id="output_captions" class="captions">
+			</div>
+			MapData:
+			<div id="output_mapData" class="captions">
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,85 +1,94 @@
 var SQUARIFIC = SQUARIFIC || {};
 SQUARIFIC.neuralCarInstance = {};
 SQUARIFIC.neuralCar = {};
+var captions = [{
+	min: 0,
+	max: 0.5,
+	color: "green"
+}, {
+	min: 0.5,
+	max: 1,
+	color: "gray"
+}];
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+	function log(m) {
+		setTimeout(consoleLog.bind(this, m), 0);
+	}
+	function consoleLog (m) {
+		document.getElementById("console").innerHTML += m + "<br/>";
+	}
+	function addLayer () {
+		var layer = document.createElement("input");
+		var label = document.createElement("div");
+		label.innerText = "Nodes (click here to remove layer): ";
+		label.className = "label";
+		label.style.cursor = "pointer";
+		layer.type = "number";
+		layer.value = 13;
+		label.layer = layer;
+		label.onclick = function (event) {
+			event.target.layer.parentNode.removeChild(event.target.layer);
+			event.target.parentNode.removeChild(event.target);
+		}
+		document.getElementById("layers").appendChild(label);
+		document.getElementById("layers").appendChild(layer);
+	}
 	function pre_start () {
 		document.getElementById("console").innerHTML += "Loading simulation... <br/>";
 		document.getElementById("topMenu").style.display = "block";
-		setTimeout(start, 0);
 	}
-	function start () {
+	function start (mapData, width, height, captions) {
 		var x, y;
 		var container = document.getElementById("screen");
 		var amountOfCars = parseInt(document.getElementById("options_cars").value);
-		var hiddenLayers = parseInt(document.getElementById("options_hidden_layers").value);
-		var hiddenNodes = parseInt(document.getElementById("options_hidden_nodes_per_layer").value);
 		var timePerGen = parseInt(document.getElementById("options_timePerGen").value) * 1000;
-		if (!(amountOfCars > 0)) {
+		var carWidth = parseInt(document.getElementById("options_car_width").value);
+		var carHeight = parseInt(document.getElementById("options_car_height").value);
+		var networkStructure = [];
+		var layers = document.getElementById("layers");
+		while (layers.firstChild) {
+			if (layers.firstChild.value && parseInt(layers.firstChild.value) > 0) {
+				networkStructure.push(parseInt(layers.firstChild.value));
+			}
+			layers.firstChild.parentNode.removeChild(layers.firstChild);
+		}
+		if (networkStructure.length < 1) {
+			document.getElementById('errorContainer').innerHTML = '<div class="error">The neural network configuration was wrong, try 1 layer with 13 nodes.</div>';
+			return;
+		}
+		if (!(amountOfCars >= 0)) {
 			amountOfCars = 3;
 		}
-		if (!(hiddenLayers > 0)) {
-			hiddenLayers = 1;
-		}
-		if (!(hiddenNodes > 0)) {
-			hiddenNodes = 38;
-		}
-		var mapData = [];
-		/*for (x = 0; x < 1000; x++) {
-			mapData[x] = [];
-			for (y = 0; y < 600; y++) {
-				if (y > 150 && y < 200 && x > 300 && x < 700) {
-					mapData[x][y] = 1;
-				} else if (y > 400 && y < 450 && x > 300 && x < 700) {
-					mapData[x][y] = 1;
-				} else {
-					var distance = (x - 300) * (x - 300) + (y - 300) * (y - 300);
-					if (distance < 22500 && distance > 10000 && x <= 300) {
-						mapData[x][y] = 1;
-					} else {
-						distance = (x - 700) * (x - 700) + (y - 300) * (y - 300);
-						if (distance < 22500 && distance > 10000 && x >= 700) {
-							mapData[x][y] = 1;
-						} else {
-							mapData[x][y] = 0.2;
-						}
-					}
-				}
-			}
-		}*/
-		for (x = 0; x < 900; x++) {
-			mapData[x] = [];
-			for (y = 0; y < 600; y++) {
-				if (x > 50 && x < 850 && y > 50 && y < 550 && (x < 100 ||
-					(x > 250 && x < 300) ||
-					(x > 600 && x < 650) ||
-					x > 800||
-					(y > 50 && y < 100) ||
-					(y > 250 && y < 300) ||
-					y > 500)) {
-					mapData[x][y] = 1;
-				} else {
-					mapData[x][y] = 0.2;
-				}
-			}
-		}
-		var captions = [{
-			min: 0,
-			max: 0.5,
-			color: "green"
-		}, {
-			min: 0.5,
-			max: 1,
-			color: "gray"
-		}];
-		var height = 600,
-			width = 900,
-			background = new SQUARIFIC.neuralCar.BackgroundMap({width: width, height: height}, mapData, captions);
+		var background = new SQUARIFIC.neuralCar.BackgroundMap({width: width, height: height}, mapData, captions);
 			world = new SQUARIFIC.neuralCar.World({width: width, height: height}, background),
 			screen = new SQUARIFIC.neuralCar.Screen(container, world);
 		var cars = [];
 		for (var i = 0; i < amountOfCars; i++) {
-			cars.push(new SQUARIFIC.neuralCar.Car({x: Math.random() * 500 + 200, y: Math.random() * 200 + 200, angle: Math.random() * 3.14, width: 20, height: 10}, new SQUARIFIC.neuralCar.AIInput({
-				hiddenLayers: hiddenLayers,
-				hiddenNodes: hiddenNodes
+			cars.push(new SQUARIFIC.neuralCar.Car({x: Math.random() * (width - 400) + 200, y: Math.random() * (height - 400) + 200, angle: Math.random() * 3.14, width: carWidth, height: carHeight}, new SQUARIFIC.neuralCar.AIInput({
+				networkStructure: networkStructure
 			})));
 		}
 		world.layers.push({
@@ -96,7 +105,7 @@ SQUARIFIC.neuralCar = {};
 		while (container.firstChild) {
 			container.removeChild(container.firstChild);
 		}
-		document.getElementById("console").innerHTML += "Loaded with Settings: <br/> &nbsp; &nbsp; Cars: " + amountOfCars + "<br/> &nbsp; &nbsp; Hidden Layers: " + hiddenLayers + "<br/> &nbsp; &nbsp; Hidden Nodes: " + hiddenNodes + "<br/>";
+		document.getElementById("console").innerHTML += "Loaded with Settings: <br/> &nbsp; &nbsp; Cars: " + amountOfCars + "<br/> &nbsp; &nbsp;  NetworkStructure: " + JSON.stringify(networkStructure) + "<br/>";
 	}
 //Screen Class
 	SQUARIFIC.neuralCar.Screen = function Screen (container, worldData) {
@@ -225,6 +234,7 @@ SQUARIFIC.neuralCar = {};
 			height = settings.height || 500;
 		var colorCtxs = {};
 		var points = {};
+		this.mapData = mapData;
 		this.createCtx = function (settings) {
 			var	canvas = document.createElement("canvas"),
 				ctx = canvas.getContext("2d");
@@ -263,7 +273,9 @@ SQUARIFIC.neuralCar = {};
 				xdif = width / blocks,
 				ydif = height / blocks,
 				width = x + width,
-				height = y + height;
+				height = y + height,
+				collision;
+			blocks = blocks + 1;
 			if (xdif <= 0 || ydif <= 0) {
 				throw "The width, height or the amount of blocks were causing a negative or zero x/y difference.";
 			}
@@ -278,15 +290,18 @@ SQUARIFIC.neuralCar = {};
 					if (!physics.collision(xt, yt, exclude)) {
 						sum += this.getBlockData(xt, yt);
 					} else {
-						sum -= 1;
+						collision = true;
 					}
 				}
+			}
+			if (collision) {
+				return 0;
 			}
 			return sum / blocks / blocks;
 		};
 		this.getBlockData = function (x, y) {
 			if (mapData[x]) {
-				return mapData[x][y];
+				return parseFloat(mapData[x][y]);
 			} else {
 				return 0;
 			}
@@ -475,8 +490,7 @@ SQUARIFIC.neuralCar = {};
 	};
 //AIInput Class
 	SQUARIFIC.neuralCar.AIInput = function AIInput (settings) {
-		var layers = settings.hiddenLayers || 1;
-		var nodes = settings.hiddenNodes || 38;
+		this.score = 0;
 		function randomNode (weights) {
 			var sign = Math.random();
 			if (sign > 0.5) {
@@ -506,24 +520,28 @@ SQUARIFIC.neuralCar = {};
 			for (var a = 0; a <= 78; a++) {
 				net.layers[0][a] = {};
 			}
-			for (var a = 0; a <= nodes; a++) {
+			for (var a = 0; a <= settings.networkStructure[0]; a++) {
 				net.layers[1][a] = randomNode(78);
 			}
-			for (var layer = 0; layer < layers - 1; layer++) {
-				net.layers[layer + 2] = {};
-				for (var a = 0; a <= nodes; a++) {
-					net.layers[layer + 2][a] = randomNode(nodes);
+			for (var layer = 1; layer < settings.networkStructure.length; layer++) {
+				net.layers[layer + 1] = {};
+				for (var a = 0; a <= settings.networkStructure[layer]; a++) {
+					net.layers[layer + 1][a] = randomNode(settings.networkStructure[layer - 1]);
 				}
 			}
-			net.layers[layers + 1] = {};
-			net.layers[layers + 1].acceleration = randomNode(nodes);
-			net.layers[layers + 1].angle = randomNode(nodes);
+			net.layers[settings.networkStructure.length + 1] = {};
+			net.layers[settings.networkStructure.length + 1].acceleration = randomNode(settings.networkStructure[layer]);
+			net.layers[settings.networkStructure.length + 1].angle = randomNode(settings.networkStructure[layer]);
 		} else {
 			net = settings.network;
 			this.net = net;
 		}
 		this.mutateValue = function (value, rate) {
-			return value + value * Math.random() * rate - value * Math.random() * rate;
+			var rv = value + (Math.random() - Math.random()) * rate * value;
+			if (rv === 0) {
+				rv = Math.random() - Math.random();
+			}
+			return rv;
 		};
 		this.changeNet = function (network) {
 			net = network;
@@ -554,7 +572,7 @@ SQUARIFIC.neuralCar = {};
 			}
 			return outputs;
 		};
-		this.worldState = function (sx, sy, xm, ym, angle, stepsX, stepsY, perStep, worldData, carData, physics) {
+		this.worldState = function (sx, sy, xm, ym, angle, stepsX, stepsY, perStep, worldData, carData, physics, pixels) {
 			var endX = sx + stepsX * perStep,
 				endY = sy + stepsY * perStep;
 			var cos = Math.cos(angle);
@@ -616,8 +634,12 @@ SQUARIFIC.neuralCar = {};
 	SQUARIFIC.neuralCar.Trainer = function Trainer (cars, settings) {
 		var gen = 1, startTime = Date.now();
 		var settings = settings || {};
+		var scores = [];
 		var timePerGen = settings.timePerGen || 15000;
 		this.timePerGen = timePerGen;
+		if (!cars || cars.length < 1) {
+			return;
+		}
 		this.top = cars[0];
 		this.top.input.lastScore = 0;
 		function clone(obj) {
@@ -667,7 +689,7 @@ SQUARIFIC.neuralCar = {};
 			}
 			for (var key = 0; key < cars.length; key++) {
 				if (typeof cars[key].input.mutateBrain === "function" && cars[key] !== top) {
-					cars[key].input.mutateBrain(JSON.parse(JSON.stringify(top.input.net)), 0.8);
+					cars[key].input.mutateBrain(JSON.parse(JSON.stringify(top.input.net)), 1.2);
 					cars[key].input.lastScore = cars[key].input.score;
 					cars[key].input.score = 0;
 					cars[key].respawn();
@@ -679,7 +701,9 @@ SQUARIFIC.neuralCar = {};
 			top.respawn();
 			top.changeColor("blue");
 			this.top = top;
-			document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. Score: " + top.input.lastScore / this.timePerGen * 100000 + " <br/>";
+			var score = Math.round(top.input.lastScore / this.timePerGen * 100000);
+			scores.push(score);
+			document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. Score: " + score + " <br/>";
 		};
 		setTimeout(function (timePerGen) {document.getElementById("console").innerHTML += "Generation #" + gen + " after " + (Date.now() - startTime) / 1000 + " seconds. <br/>"; this.id = setInterval(this.reproduce.bind(this), timePerGen);}.bind(this, timePerGen), 0);
 	};

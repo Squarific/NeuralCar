@@ -8,6 +8,19 @@ body {
 	-moz-user-select: -moz-none;
 	user-select: none;
 }
+a {
+	color:rgb(22, 22, 22);
+}
+a:hover {
+	color:white;
+}
+.error {
+	border:1px solid black;
+	background:red;
+	color:white;
+	padding:1%;
+	margin:1%;
+}
 .topMenu {
 	display:none;
 	background:gray;
@@ -42,22 +55,30 @@ body {
 	border: 1px solid rgb(68, 68, 68);
 	border-radius:2px;
 }
+.start {
+	cursor: pointer;
+}
 .label {
 	display:inline;
 	width:200px;
 	color:rgb(28, 44, 39);
-	font-size:24px;
+	font-size:18px;
 	font-weight:800;
 }
 input {
 	width:98%;
 	margin:1%;
 	padding:5px;
-	font-size:22px;
+	font-size:18px;
 	font-weight:800;
 	color:rgb(43, 68, 60);
 	background:white;
 	border: 2px inset rgb(138, 138, 138);
+}
+.container {
+	background:rgb(180, 194, 199);
+	padding:2%;
+	border:1px solid black;
 }
 .submit {
 	border: 2px outset rgb(138, 138, 138);
@@ -117,8 +138,8 @@ input {
 	color:rgb(58, 42, 19);
 	border-radius:2px;
 }
-.close {
-	background:rgb(62, 122, 29);
+.close:hover {
+	background:rgb(85, 92, 81);
 	color:white;
 }
 #console {

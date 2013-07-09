@@ -60,7 +60,7 @@ function showList (list, addToTrainer) {
 		el.network = list[key].network;
 		el.add = addToTrainer;
 		el.addEventListener('click', function (event) {
-			var car = new SQUARIFIC.neuralCar.Car({color: "#B012A5", x: Math.random() * 500 + 200, y: Math.random() * 200 + 200, angle: Math.random() * 3.14, width: 20, height: 10}, new SQUARIFIC.neuralCar.AIInput({
+			var car = new SQUARIFIC.neuralCar.Car({color: "#B012A5", x: Math.random() * 500 + 200, y: Math.random() * 200 + 200, angle: Math.random() * 3.14, width: 10, height: 5}, new SQUARIFIC.neuralCar.AIInput({
 				network: event.target.network
 			}));
 			SQUARIFIC.neuralCarInstance.world.layers[1].objects.push(car);

@@ -1,0 +1,74 @@
+body {
+	margin:0;
+	padding:0;
+}
+textarea {
+	margin:1%;
+	margin-top:10px;
+	width:98%;
+	height:100px;
+}
+input {
+	font-size:14px;
+	font-weight:800;
+	width:100px;
+	margin:3px;
+}
+input[type="submit"] {
+	margin:1%;
+	width:98%;
+}
+.editor {
+	color:white;
+}
+.output {
+	display:none;
+	overflow:auto;
+	background:rgba(104, 91, 68, 0.96);
+	position:fixed;
+	left:5%;
+	right:5%;
+	top:5%;
+	bottom:5%;
+	padding:2%;
+	border:1px solid black;
+	border-radius:5px;
+}
+.errorMessage {
+	padding:5px;
+	margin:5px;
+	color:white;
+	background:red;
+	border:1px solid black;
+}
+.captions {
+	font-size:14px;
+	font-weight:800;
+	color:rgb(53, 51, 46);
+	margin:1%;
+}
+.label {
+	display:inline-block;
+	font-size:14px;
+	font-weight:800;
+	color:rgb(53, 51, 46);
+	width:100px;
+}
+.left {
+	width:75%;
+	background:black;
+	position:fixed;
+	left:0;
+	top:0;
+	height:100%;
+	overflow:auto;
+}
+.right {
+	width:25%;
+	background:rgb(169, 161, 185);
+	position:fixed;
+	right:0;
+	top:0;
+	height:100%;
+	overflow:auto;
+}
