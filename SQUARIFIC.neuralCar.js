@@ -689,7 +689,7 @@ var captions = [{
 			}
 			for (var key = 0; key < cars.length; key++) {
 				if (typeof cars[key].input.mutateBrain === "function" && cars[key] !== top) {
-					cars[key].input.mutateBrain(JSON.parse(JSON.stringify(top.input.net)), 1.2);
+					cars[key].input.mutateBrain(JSON.parse(JSON.stringify(top.input.net)), 4);
 					cars[key].input.lastScore = cars[key].input.score;
 					cars[key].input.score = 0;
 					cars[key].respawn();
