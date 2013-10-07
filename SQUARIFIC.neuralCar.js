@@ -617,9 +617,9 @@ var captions = [{
 				accel = -1;
 			}
 			var angle = values.angle;
-			if (angle > 0.55) {
+			if (angle > 0.6) {
 				angle = 1;
-			} else if (angle > 0.45) {
+			} else if (angle > 0.4) {
 				angle = 0
 			} else {
 				angle = -1;
