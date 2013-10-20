@@ -1,9 +1,6 @@
 NeuralCar
 =========
 
-A javascript simulation to make highly intelligent cars meant to take over the world.
+Version 2 available!
 
-Demo
-====
-
-http://thepublicshare.com/neuralCar/screen.html
+https://github.com/Squarific/NeuralCar-2.0
